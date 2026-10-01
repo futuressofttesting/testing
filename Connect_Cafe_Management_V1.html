@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="connect-cafe-logo.png" type="image/png">
+<meta name="theme-color" content="#4b2717">
+<title>Connect Cafe — Management V1</title>
+<style>
+:root{--bg:#f6f1eb;--panel:#fffdf9;--text:#2b211c;--muted:#7a6c63;--line:#e9ddd3;--brand:#4b2717;--brand2:#7a4225;--accent:#c98a4a;--accent-soft:#f3e6d7;--good:#1f7a53;--warn:#b26b16;--bad:#b42318;--shadow:0 14px 36px rgba(74,43,24,.09);--shadow-soft:0 8px 22px rgba(74,43,24,.07)}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit} button{cursor:pointer}
+.app{display:flex;min-height:100vh}.side{width:240px;background:#0f172a;color:#e5e7eb;padding:18px 14px;position:sticky;top:0;height:100vh}.brand{font-weight:800;font-size:20px;padding:8px 10px 20px}.brand small{display:block;font-size:11px;color:#94a3b8;margin-top:4px;font-weight:500}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#cbd5e1;text-align:left;padding:11px 12px;border-radius:8px}.nav button:hover,.nav button.active{background:#1e293b;color:#fff}.main{flex:1;min-width:0}.top{height:66px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:5}.top .title{font-size:18px;font-weight:700}.wrap{padding:22px;max-width:1500px;margin:auto}.grid{display:grid;gap:16px}.kpi{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:18px}.kpi .card{padding:17px}.kpi .label{font-size:12px;color:var(--muted)}.kpi .value{font-size:26px;font-weight:800;margin-top:7px}.kpi .sub{font-size:11px;color:var(--muted);margin-top:5px}.two{grid-template-columns:1.2fr .8fr}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .spacer{flex:1}.btn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:8px}.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}.btn.danger{background:#fff5f5;color:var(--bad);border-color:#fecaca}.btn.small{padding:6px 9px;font-size:12px}.input, .select{width:100%;border:1px solid #d5dae1;border-radius:8px;padding:9px 10px;background:#fff}.formgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}.table{width:100%;border-collapse:collapse;background:#fff}.table th,.table td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;white-space:nowrap}.table th{background:#f8fafc;color:#475569;font-size:12px}.table tr:last-child td{border-bottom:0}.right{text-align:right!important}.money{font-variant-numeric:tabular-nums}.badge{display:inline-flex;align-items:center;padding:3px 7px;border-radius:999px;font-size:11px;font-weight:700}.badge.good{background:#ecfdf3;color:#16794c}.badge.warn{background:#fffbeb;color:#a16207}.badge.bad{background:#fef2f2;color:#b42318}.muted{color:var(--muted)}.section-title{font-size:16px;font-weight:750;margin:0 0 12px}.empty{padding:30px;text-align:center;color:var(--muted)}.pos-grid{display:grid;grid-template-columns:1fr 360px;gap:16px}.menu-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.menu-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:left}.menu-item .name{font-weight:700}.menu-item .price{font-size:18px;font-weight:800;margin-top:6px}.menu-item button{width:100%;margin-top:10px}.cart{position:sticky;top:84px}.cart-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.cart-row:last-child{border-bottom:0}.cart-actions{display:flex;gap:6px;align-items:center}.qtybox{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}.qtybox button{border:0;background:#f8fafc;width:28px}.qtybox span{display:inline-flex;min-width:28px;align-items:center;justify-content:center;font-size:12px}.summary{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}.summary-line{display:flex;justify-content:space-between;padding:5px 0}.summary-line.total{font-size:17px;font-weight:800}.modal{position:fixed;inset:0;background:rgba(15,23,42,.46);display:none;align-items:center;justify-content:center;z-index:30;padding:18px}.modal.show{display:flex}.modal-box{background:#fff;border-radius:14px;max-width:820px;width:100%;max-height:90vh;overflow:auto;padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.alert{padding:11px 12px;border-radius:8px;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;font-size:13px}.success{padding:11px 12px;border-radius:8px;background:#ecfdf3;color:#166534;border:1px solid #bbf7d0;font-size:13px}.dangertext{color:var(--bad)}.mini{font-size:11px}.hidden{display:none!important}@media(max-width:1100px){.kpi{grid-template-columns:repeat(2,1fr)}.menu-grid{grid-template-columns:repeat(3,1fr)}.pos-grid{grid-template-columns:1fr}.cart{position:static}}@media(max-width:760px){.side{width:190px}.formgrid,.three,.two{grid-template-columns:1fr}.menu-grid{grid-template-columns:repeat(2,1fr)}.top{padding:0 14px}.wrap{padding:14px}}
+@media print{.side,.top,.no-print{display:none!important}.main{width:100%}.wrap{padding:0}.card{box-shadow:none}.table th{background:#eee!important}}
+
+
+/* Connect Cafe V1.1 UX enhancements: tables, persistent held orders, improved dashboard */
+:root{--brand-dark:#35180e;--cream:#fffaf5;--line2:#ead7c8;--accent2:#d59a63;--ink:#2f211b}
+.pos-shell{display:grid;gap:16px}
+.table-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.table-card{border:1px solid var(--line2);background:linear-gradient(180deg,#fffdf9,#fff8f2);border-radius:16px;padding:12px 13px;min-height:94px;cursor:pointer;transition:.18s ease;box-shadow:0 5px 16px rgba(74,43,24,.05);position:relative;overflow:hidden}
+.table-card::before{content:'';position:absolute;left:0;top:0;width:100%;height:3px;background:linear-gradient(90deg,#c88a53,#e3bb8b)}
+.table-card:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(74,43,24,.1)}
+.table-card.active{border-color:#8c4d2d;box-shadow:0 0 0 2px rgba(140,77,45,.12),0 12px 24px rgba(74,43,24,.1)}
+.table-card.occupied::before{background:linear-gradient(90deg,#aa5a2a,#d89b62)}
+.table-card.takeaway::before{background:linear-gradient(90deg,#6555b4,#9c8be0)}
+.table-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.table-name{font-weight:800;color:#3a261b;font-size:14px}.table-meta{font-size:11px;color:#8f7f72;margin-top:6px}.table-amount{font-size:14px;font-weight:800;color:#5e311d;margin-top:7px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#2a8a61;box-shadow:0 0 0 4px rgba(42,138,97,.1)}.occupied .status-dot{background:#bf7130;box-shadow:0 0 0 4px rgba(191,113,48,.12)}
+.pos-main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}.menu-panel{min-width:0}.cart-panel{position:sticky;top:90px}
+.table-toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:2px}.table-toolbar .hint{font-size:12px;color:#8f7f72}
+.dashboard-hero{display:grid;grid-template-columns:1.45fr .9fr;gap:16px;margin-top:16px}.hero-card{background:linear-gradient(135deg,#402117,#6b3924);color:#fff;border:0;box-shadow:0 18px 34px rgba(59,31,17,.18);position:relative;overflow:hidden}.hero-card::after{content:'';position:absolute;right:-50px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,180,.16),transparent 65%)}.hero-small{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:#e8c8b1}.hero-title{font-size:30px;font-weight:850;margin:10px 0 5px;letter-spacing:-.7px}.hero-sub{color:#e8d7cc;font-size:13px;max-width:520px}.hero-actions{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}.hero-actions .btn{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16);color:#fff;box-shadow:none}.hero-actions .btn.primary{background:#f6ddc4;color:#4b2717;border-color:#f6ddc4}
+.chart-card{min-height:290px}.chart-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.chart-wrap{height:210px;display:flex;align-items:flex-end;gap:12px;padding:14px 4px 4px}.bar-col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px}.bar-track{height:160px;width:100%;max-width:36px;border-radius:11px;background:#f5ece5;display:flex;align-items:flex-end;overflow:hidden}.bar-fill{width:100%;background:linear-gradient(180deg,#d59a63,#754125);border-radius:11px 11px 0 0;min-height:3px}.bar-label{font-size:10px;color:#95857a}.bar-value{font-size:10px;font-weight:700;color:#6a4a38;min-height:12px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.mini-stat{padding:12px;border-radius:12px;background:#fff9f3;border:1px solid #efe0d4}.mini-stat .label{font-size:11px;color:#927c6c}.mini-stat .val{font-size:18px;font-weight:800;color:#4b2a1c;margin-top:4px}
+.pay-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0}.pay-left{display:flex;align-items:center;gap:8px;font-size:12px}.pay-dot{width:9px;height:9px;border-radius:50%;background:#7a4225}.pay-bar{height:7px;background:#f1e4da;border-radius:999px;overflow:hidden;flex:1;max-width:140px}.pay-bar>span{display:block;height:100%;background:linear-gradient(90deg,#8a4c2d,#d39b66);border-radius:999px}
+.occupancy-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0}.progress{height:8px;background:#f1e6dc;border-radius:99px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,#7a4225,#d59a63);border-radius:99px}
+@media(max-width:1200px){.table-strip{grid-template-columns:repeat(4,minmax(0,1fr))}.pos-main{grid-template-columns:1fr}.cart-panel{position:static}.dashboard-hero{grid-template-columns:1fr}}
+@media(max-width:760px){.table-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-grid{grid-template-columns:1fr}.hero-title{font-size:24px}}
+
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at top right,rgba(201,138,74,.08),transparent 26%),linear-gradient(180deg,#faf7f3 0%,#f4eee8 100%);color:var(--text)}
+.app{min-height:100vh}
+.side{width:258px;background:linear-gradient(180deg,#2b160d 0%,#3a1f12 50%,#25130c 100%);border-right:1px solid rgba(255,255,255,.08);padding:18px 14px 14px;box-shadow:14px 0 30px rgba(52,27,14,.12);display:flex;flex-direction:column}
+.brand{padding:6px 10px 18px;display:flex;align-items:center;gap:12px;line-height:1.05;color:#fff}
+.brand img{width:54px;height:54px;border-radius:16px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.14);background:#4a2718}
+.brand .brand-copy{min-width:0}
+.brand .brand-name{font-family:Georgia,'Times New Roman',serif;font-size:24px;letter-spacing:-.3px;font-weight:800}
+.brand .brand-tag{display:block;font-size:10px;line-height:1.35;color:#ddc9bc;margin-top:4px;font-weight:500}
+.nav{display:grid;gap:6px;margin-top:2px}
+.nav button{border:1px solid transparent;background:transparent;color:#ddcec5;text-align:left;padding:11px 12px;border-radius:12px;transition:.18s ease;letter-spacing:.1px}
+.nav button:hover{background:rgba(255,255,255,.06);color:#fff;transform:translateX(2px)}
+.nav button.active{background:linear-gradient(90deg,rgba(201,138,74,.24),rgba(201,138,74,.08));border-color:rgba(201,138,74,.24);color:#fff;box-shadow:inset 3px 0 0 var(--accent)}
+.nav button::before{display:inline-block;width:22px;margin-right:7px;opacity:.85}
+.nav button[data-view="dashboard"]::before{content:'⌂'}
+.nav button[data-view="pos"]::before{content:'▣'}
+.nav button[data-view="recipes"]::before{content:'✦'}
+.nav button[data-view="ingredients"]::before{content:'◈'}
+.nav button[data-view="inventory"]::before{content:'▤'}
+.nav button[data-view="purchases"]::before{content:'＋'}
+.nav button[data-view="expenses"]::before{content:'₨'}
+.nav button[data-view="waste"]::before{content:'⌁'}
+.nav button[data-view="menu"]::before{content:'☰'}
+.nav button[data-view="reports"]::before{content:'▥'}
+.nav button[data-view="settings"]::before{content:'⚙'}
+.side-footer{margin-top:auto;padding:15px 9px 2px;color:#bda99e;font-size:10px;line-height:1.45}
+.side-footer .insta-link{display:flex;align-items:center;gap:8px;margin-top:10px;padding:8px 9px;border:1px solid rgba(255,255,255,.09);border-radius:10px;color:#f0dfd3;text-decoration:none;background:rgba(255,255,255,.035)}
+.side-footer .insta-link:hover{background:rgba(201,138,74,.12);color:#fff}
+.side-footer .ig-dot{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,#6c3b20,#c96a83,#9b55b5);color:#fff;font-size:12px;font-weight:800}
+.main{background:transparent}
+.top{height:74px;background:rgba(255,253,249,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(233,221,211,.85);padding:0 28px;box-shadow:0 4px 20px rgba(74,43,24,.04)}
+.top .title{font-size:20px;font-weight:800;letter-spacing:-.25px}
+.top-tools{display:flex;align-items:center;gap:10px}
+.online-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#f5eadf;border:1px solid #ead7c7;color:#6d4d39;font-size:11px;font-weight:700}
+.online-pill .dot{width:7px;height:7px;border-radius:50%;background:#b26b16;box-shadow:0 0 0 4px rgba(178,107,22,.10)}
+.insta-top{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:#5c3825;border:1px solid #ead9cb;background:#fffaf5;border-radius:10px;padding:8px 11px;font-size:12px;font-weight:700}
+.insta-top:hover{border-color:#cda17d;background:#fff7ef}
+.wrap{padding:26px;max-width:1560px}
+.card{border:1px solid rgba(233,221,211,.9);border-radius:16px;box-shadow:var(--shadow-soft);background:rgba(255,253,249,.96)}
+.kpi .card{position:relative;overflow:hidden;padding:19px}
+.kpi .card::after{content:'';position:absolute;right:-16px;top:-16px;width:58px;height:58px;border-radius:50%;background:radial-gradient(circle,rgba(201,138,74,.18),transparent 68%)}
+.kpi .label{font-weight:700;color:#8a7466;letter-spacing:.2px}
+.kpi .value{font-size:29px;color:#3a2317;letter-spacing:-.7px}
+.section-title{font-weight:800;color:#3a281d}
+.table-wrap{border-color:#eadfd7;box-shadow:0 4px 14px rgba(74,43,24,.03)}
+.table th{background:#fbf4ed;color:#725843;border-bottom-color:#eadfd7}
+.table td{border-bottom-color:#eee4dc}
+.table tr:hover td{background:#fffaf5}
+.input,.select{border-color:#decfc3;background:#fffdfa;color:#38281e;transition:border-color .15s,box-shadow .15s}
+.input:focus,.select:focus{outline:none;border-color:#bf8a60;box-shadow:0 0 0 4px rgba(201,138,74,.12)}
+.btn{border-color:#decfc3;background:#fffdfa;color:#3c2b21;border-radius:10px;transition:.15s ease;box-shadow:0 2px 5px rgba(74,43,24,.03)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(74,43,24,.08)}
+.btn.primary{background:linear-gradient(135deg,#4b2717,#6e3b23);border-color:#4b2717;color:#fff;box-shadow:0 8px 18px rgba(75,39,23,.18)}
+.btn.primary:hover{background:linear-gradient(135deg,#5a2f1b,#7a4225)}
+.btn.danger{background:#fff5f2;border-color:#efd2cb}
+.menu-item{border-color:#eadfd7;border-radius:16px;padding:15px;background:linear-gradient(180deg,#fffefa,#fffaf5);box-shadow:0 6px 18px rgba(74,43,24,.05);transition:.18s ease;position:relative;overflow:hidden}
+.menu-item::before{content:'';position:absolute;left:0;top:0;width:100%;height:4px;background:linear-gradient(90deg,#8b522d,#d5a06a);opacity:.8}
+.menu-item:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(74,43,24,.11);border-color:#dfcabb}
+.menu-item .name{font-size:15px;color:#3a261a;margin-top:2px}
+.menu-item .price{color:#5e311d}
+.cart{top:88px;border-color:#e7d8cc}
+.badge.good{background:#edf8f2;color:#1f7a53}.badge.warn{background:#fff6e6;color:#a86617}.badge.bad{background:#fdf0ee;color:#b42318}
+.alert{background:#fff7ee;border-color:#efd8be;color:#8d4f18}.success{background:#eff8f3;border-color:#cbe6d5;color:#246a45}
+.modal{background:rgba(45,26,16,.54);backdrop-filter:blur(5px)}
+.modal-box{border:1px solid #eadbd0;box-shadow:0 30px 80px rgba(48,25,14,.25);border-radius:18px}
+.empty{padding:34px 20px;color:#9a897d}
+@media(max-width:760px){.side{width:82px;padding:12px 9px}.brand{justify-content:center;padding-bottom:13px}.brand .brand-copy,.side-footer{display:none}.brand img{width:54px;height:54px}.nav button{font-size:0;text-align:center;padding:11px 7px}.nav button::before{margin:0;font-size:17px}.top{padding:0 14px}.top-tools .online-pill{display:none}.insta-top{padding:8px 9px;font-size:0}.insta-top::before{content:'◎';font-size:16px}.wrap{padding:14px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <img src="connect-cafe-logo.png" alt="Connect Cafe logo">
+      <div class="brand-copy">
+        <div class="brand-name">Connect Cafe</div>
+        <span class="brand-tag">a place that feels like home</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="pos">POS / Sales</button>
+      <button data-view="recipes">Recipes</button>
+      <button data-view="ingredients">Ingredients</button>
+      <button data-view="inventory">Inventory</button>
+      <button data-view="purchases">Purchases</button>
+      <button data-view="expenses">Expenses</button>
+      <button data-view="waste">Waste</button>
+      <button data-view="menu">Menu & Pricing</button>
+      <button data-view="reports">Reports</button>
+      <button data-view="settings">Settings & Backup</button>
+    </nav>
+    <div class="side-footer">
+      <div>Connect Cafe • Cafe Management Offline V1</div>
+      <div>© ConnectCafe2026</div>
+      <a class="insta-link" href="https://www.instagram.com/connectcafe2026" target="_blank" rel="noopener noreferrer">
+        <span class="ig-dot">◎</span><span>@connectcafe2026</span>
+      </a>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="top">
+      <div class="title" id="pageTitle">Dashboard</div>
+      <div class="top-tools">
+        <div class="online-pill"><span class="dot"></span>Offline Mode</div>
+        <a class="insta-top" href="https://www.instagram.com/connectcafe2026" target="_blank" rel="noopener noreferrer">◎ Instagram&nbsp; @connectcafe2026</a>
+        <div class="muted mini" id="dateNow"></div>
+      </div>
+    </header>
+    <div class="wrap" id="appView"></div>
+  </main>
+</div>
+<div class="modal" id="modal"><div class="modal-box" id="modalBox"></div></div>
+<script>
+const SEED = {
+  "ingredients": [
+    {
+      "id": "coffee",
+      "name": "Coffee",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "milk",
+      "name": "Milk",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "water",
+      "name": "Water",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "packaging",
+      "name": "Packaging",
+      "unit": "pc",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "ice",
+      "name": "Ice",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "chocolate-syrup",
+      "name": "Chocolate Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "caramel-syrup",
+      "name": "Caramel Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "vanilla-syrup",
+      "name": "Vanilla Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "honey",
+      "name": "Honey",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "cinnamon",
+      "name": "Cinnamon",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "lemon",
+      "name": "Lemon",
+      "unit": "pc",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "mint",
+      "name": "Mint",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "tea",
+      "name": "Tea",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "chamomile-tea",
+      "name": "Chamomile Tea",
+      "unit": "bag",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "hibiscus-tea",
+      "name": "Hibiscus Tea",
+      "unit": "bag",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "butterfly-pea-tea",
+      "name": "Butterfly Pea Tea",
+      "unit": "bag",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "peach-powder",
+      "name": "Peach Powder",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "strawberry-syrup",
+      "name": "Strawberry Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "blueberry-syrup",
+      "name": "Blueberry Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "nutella",
+      "name": "Nutella",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "coconut-milk",
+      "name": "Coconut Milk",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "coconut-cream",
+      "name": "Coconut Cream",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "Cocoa Powder",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "sprite",
+      "name": "Sprite",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "soda-water",
+      "name": "Soda Water",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "passion-fruit-syrup",
+      "name": "Passion Fruit Syrup",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "avocado",
+      "name": "Avocado",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "banana",
+      "name": "Banana",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "whipping-cream",
+      "name": "Whipping Cream",
+      "unit": "ml",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "ginger",
+      "name": "Ginger",
+      "unit": "g",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    },
+    {
+      "id": "ice-cream",
+      "name": "Ice Cream",
+      "unit": "scoop",
+      "purchaseQty": 1000.0,
+      "purchaseCost": 100.0,
+      "stockQty": 2000.0,
+      "minStock": 250.0
+    }
+  ],
+  "recipes": [
+    {
+      "drink": "Espresso",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Espresso",
+      "ingredient": "Water",
+      "qty": 30.0
+    },
+    {
+      "drink": "Espresso",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Doppio",
+      "ingredient": "Coffee",
+      "qty": 18.0
+    },
+    {
+      "drink": "Doppio",
+      "ingredient": "Water",
+      "qty": 60.0
+    },
+    {
+      "drink": "Doppio",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Ristretto",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Ristretto",
+      "ingredient": "Water",
+      "qty": 15.0
+    },
+    {
+      "drink": "Ristretto",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Lungo",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Lungo",
+      "ingredient": "Water",
+      "qty": 60.0
+    },
+    {
+      "drink": "Lungo",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Macchiato",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Macchiato",
+      "ingredient": "Milk",
+      "qty": 10.0
+    },
+    {
+      "drink": "Macchiato",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Affogato",
+      "ingredient": "Ice Cream",
+      "qty": 1.0
+    },
+    {
+      "drink": "Affogato",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Americano",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Americano",
+      "ingredient": "Water",
+      "qty": 180.0
+    },
+    {
+      "drink": "Americano",
+      "ingredient": "Sugar",
+      "qty": 5.0
+    },
+    {
+      "drink": "Americano",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Cafe Latte",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Cafe Latte",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Cafe Latte",
+      "ingredient": "Sugar",
+      "qty": 5.0
+    },
+    {
+      "drink": "Cafe Latte",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Cappuccino",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Cappuccino",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Cappuccino",
+      "ingredient": "Sugar",
+      "qty": 5.0
+    },
+    {
+      "drink": "Cappuccino",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Mocha",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Mocha",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Mocha",
+      "ingredient": "Chocolate Syrup",
+      "qty": 10.0
+    },
+    {
+      "drink": "Mocha",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Caramel Macchiato",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Caramel Macchiato",
+      "ingredient": "Milk",
+      "qty": 170.0
+    },
+    {
+      "drink": "Caramel Macchiato",
+      "ingredient": "Caramel Syrup",
+      "qty": 10.0
+    },
+    {
+      "drink": "Caramel Macchiato",
+      "ingredient": "Vanilla Syrup",
+      "qty": 10.0
+    },
+    {
+      "drink": "Caramel Macchiato",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Cortado",
+      "ingredient": "Coffee",
+      "qty": 18.0
+    },
+    {
+      "drink": "Cortado",
+      "ingredient": "Milk",
+      "qty": 50.0
+    },
+    {
+      "drink": "Cortado",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Flat White",
+      "ingredient": "Coffee",
+      "qty": 18.0
+    },
+    {
+      "drink": "Flat White",
+      "ingredient": "Milk",
+      "qty": 150.0
+    },
+    {
+      "drink": "Flat White",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Iced Cappuccino",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Iced Cappuccino",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Iced Cappuccino",
+      "ingredient": "Ice",
+      "qty": 120.0
+    },
+    {
+      "drink": "Iced Cappuccino",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Iced Latte",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Iced Latte",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Iced Latte",
+      "ingredient": "Ice",
+      "qty": 120.0
+    },
+    {
+      "drink": "Iced Latte",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Iced Americano",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Iced Americano",
+      "ingredient": "Water",
+      "qty": 180.0
+    },
+    {
+      "drink": "Iced Americano",
+      "ingredient": "Ice",
+      "qty": 120.0
+    },
+    {
+      "drink": "Iced Americano",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Iced Mocha",
+      "ingredient": "Coffee",
+      "qty": 9.5
+    },
+    {
+      "drink": "Iced Mocha",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Iced Mocha",
+      "ingredient": "Chocolate Syrup",
+      "qty": 10.0
+    },
+    {
+      "drink": "Iced Mocha",
+      "ingredient": "Ice",
+      "qty": 120.0
+    },
+    {
+      "drink": "Matcha Latte",
+      "ingredient": "Matcha",
+      "qty": 3.0
+    },
+    {
+      "drink": "Matcha Latte",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Matcha Latte",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Honey Cinnamon Matcha",
+      "ingredient": "Matcha",
+      "qty": 3.0
+    },
+    {
+      "drink": "Honey Cinnamon Matcha",
+      "ingredient": "Milk",
+      "qty": 180.0
+    },
+    {
+      "drink": "Honey Cinnamon Matcha",
+      "ingredient": "Honey",
+      "qty": 10.0
+    },
+    {
+      "drink": "Honey Cinnamon Matcha",
+      "ingredient": "Cinnamon",
+      "qty": 1.0
+    },
+    {
+      "drink": "Lemon Tea",
+      "ingredient": "Tea",
+      "qty": 3.0
+    },
+    {
+      "drink": "Lemon Tea",
+      "ingredient": "Lemon",
+      "qty": 1.0
+    },
+    {
+      "drink": "Lemon Tea",
+      "ingredient": "Water",
+      "qty": 200.0
+    },
+    {
+      "drink": "Lemon Tea",
+      "ingredient": "Sugar",
+      "qty": 5.0
+    },
+    {
+      "drink": "Hot Chocolate",
+      "ingredient": "Milk",
+      "qty": 200.0
+    },
+    {
+      "drink": "Hot Chocolate",
+      "ingredient": "Chocolate Syrup",
+      "qty": 20.0
+    },
+    {
+      "drink": "Hot Chocolate",
+      "ingredient": "Cocoa Powder",
+      "qty": 10.0
+    },
+    {
+      "drink": "Hot Chocolate",
+      "ingredient": "Packaging",
+      "qty": 1.0
+    },
+    {
+      "drink": "Virgin Mojito",
+      "ingredient": "Mint",
+      "qty": 10.0
+    },
+    {
+      "drink": "Virgin Mojito",
+      "ingredient": "Lemon",
+      "qty": 1.0
+    },
+    {
+      "drink": "Virgin Mojito",
+      "ingredient": "Sugar",
+      "qty": 15.0
+    },
+    {
+      "drink": "Virgin Mojito",
+      "ingredient": "Soda Water",
+      "qty": 200.0
+    },
+    {
+      "drink": "Virgin Mojito",
+      "ingredient": "Ice",
+      "qty": 120.0
+    }
+  ],
+  "menu": [
+    {
+      "id": "affogato",
+      "name": "Affogato",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "americano",
+      "name": "Americano",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "cafe-latte",
+      "name": "Cafe Latte",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "cappuccino",
+      "name": "Cappuccino",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "caramel-macchiato",
+      "name": "Caramel Macchiato",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "cortado",
+      "name": "Cortado",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "doppio",
+      "name": "Doppio",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "espresso",
+      "name": "Espresso",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "flat-white",
+      "name": "Flat White",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "honey-cinnamon-matcha",
+      "name": "Honey Cinnamon Matcha",
+      "price": 200.0,
+      "category": "Matcha",
+      "active": true
+    },
+    {
+      "id": "hot-chocolate",
+      "name": "Hot Chocolate",
+      "price": 200.0,
+      "category": "Chocolate",
+      "active": true
+    },
+    {
+      "id": "iced-americano",
+      "name": "Iced Americano",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "iced-cappuccino",
+      "name": "Iced Cappuccino",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "iced-latte",
+      "name": "Iced Latte",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "iced-mocha",
+      "name": "Iced Mocha",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "lemon-tea",
+      "name": "Lemon Tea",
+      "price": 200.0,
+      "category": "Tea",
+      "active": true
+    },
+    {
+      "id": "lungo",
+      "name": "Lungo",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "macchiato",
+      "name": "Macchiato",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "matcha-latte",
+      "name": "Matcha Latte",
+      "price": 200.0,
+      "category": "Matcha",
+      "active": true
+    },
+    {
+      "id": "mocha",
+      "name": "Mocha",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "ristretto",
+      "name": "Ristretto",
+      "price": 200.0,
+      "category": "Coffee",
+      "active": true
+    },
+    {
+      "id": "virgin-mojito",
+      "name": "Virgin Mojito",
+      "price": 200.0,
+      "category": "Cold Drinks",
+      "active": true
+    }
+  ],
+  "sales": [],
+  "purchases": [],
+  "expenses": [],
+  "waste": [],
+  "suppliers": [],
+  "settings": {
+    "cafeName": "Connect Cafe",
+    "currency": "Rs.",
+    "defaultFoodCostTarget": 35,
+    "taxPercent": 0
+  }
+};
+const KEY='cafe_management_v1_data';
+let data = JSON.parse(localStorage.getItem(KEY) || 'null') || JSON.parse(JSON.stringify(SEED));
+if(!data.settings) data.settings = JSON.parse(JSON.stringify(SEED.settings));
+if(data.settings.cafeName==='My Cafe' || data.settings.cafeName==='Café Management' || !data.settings.cafeName) data.settings.cafeName='Connect Cafe';
+let currentView='dashboard';
+let cart=[];
+function save(){ localStorage.setItem(KEY, JSON.stringify(data)); }
+function money(v){return `${data.settings.currency||'Rs.'} ${Number(v||0).toFixed(2)}`}
+function pct(v){return `${Number(v||0).toFixed(1)}%`}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function uid(prefix='id'){return prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function ingredient(name){return data.ingredients.find(x=>x.name===name)}
+function unitCost(name){const i=ingredient(name); return i&&i.purchaseQty?Number(i.purchaseCost||0)/Number(i.purchaseQty):0}
+function recipeRows(drink){return data.recipes.filter(r=>r.drink===drink)}
+function drinkCost(drink){return recipeRows(drink).reduce((s,r)=>s+Number(r.qty||0)*unitCost(r.ingredient),0)}
+function menuItem(name){return data.menu.find(m=>m.name===name)}
+function todayKey(d=new Date()){return d.toISOString().slice(0,10)}
+function saleTotal(s){return Number(s.total||0)}
+function todaySales(){const t=todayKey();return data.sales.filter(s=>s.date===t)}
+function totalSales(){return data.sales.reduce((s,o)=>s+saleTotal(o),0)}
+function salesCogs(){return data.sales.reduce((sum,o)=>sum+(o.items||[]).reduce((a,it)=>a+drinkCost(it.name)*it.qty,0),0)}
+function expensesTotal(){return data.expenses.reduce((s,e)=>s+Number(e.amount||0),0)}
+function wasteTotal(){return data.waste.reduce((s,w)=>s+Number(w.cost||0),0)}
+function render(){
+  document.getElementById('dateNow').textContent=new Date().toLocaleString();
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===currentView));
+  const titles={dashboard:'Dashboard',pos:'POS / Sales',recipes:'Recipes',ingredients:'Ingredients',inventory:'Inventory',purchases:'Purchases',expenses:'Expenses',waste:'Waste',menu:'Menu & Pricing',reports:'Reports',settings:'Settings & Backup'};
+  document.getElementById('pageTitle').textContent=titles[currentView]||'Connect Cafe';
+  document.getElementById('appView').innerHTML=views[currentView]();
+  bind();
+}
+const views={
+ dashboard(){
+  const ts=todaySales(); const sales=ts.reduce((s,o)=>s+saleTotal(o),0); const cogs=ts.reduce((s,o)=>s+(o.items||[]).reduce((a,it)=>a+drinkCost(it.name)*it.qty,0),0); const exp=data.expenses.filter(e=>e.date===todayKey()).reduce((s,e)=>s+Number(e.amount||0),0);
+  const low=data.ingredients.filter(i=>Number(i.stockQty||0)<=Number(i.minStock||0));
+  const counts={}; data.sales.forEach(o=>(o.items||[]).forEach(it=>counts[it.name]=(counts[it.name]||0)+it.qty));
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  return `<div class="grid kpi">
+    ${kpi('Today Sales',money(sales),`${ts.length} order(s)`)}
+    ${kpi('Today COGS',money(cogs),`Food cost ${sales?pct(cogs/sales*100):'0.0%'}`)}
+    ${kpi('Today Gross Profit',money(sales-cogs),`Before operating expenses`)}
+    ${kpi('Today Net Estimate',money(sales-cogs-exp),`Expenses ${money(exp)}`)}
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card"><h3 class="section-title">Top selling drinks</h3>${top.length?`<div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Qty</th><th>Revenue</th></tr>${top.map(([n,q])=>{const p=menuItem(n)?.price||0;return `<tr><td>${esc(n)}</td><td>${q}</td><td class="money">${money(q*p)}</td></tr>`}).join('')}</table></div>`:'<div class="empty">No sales yet.</div>'}</div>
+    <div class="card"><h3 class="section-title">Low stock</h3>${low.length?`<div class="table-wrap"><table class="table"><tr><th>Ingredient</th><th>Stock</th><th>Min</th></tr>${low.map(i=>`<tr><td>${esc(i.name)}</td><td>${Number(i.stockQty).toFixed(2)} ${esc(i.unit)}</td><td>${Number(i.minStock).toFixed(2)} ${esc(i.unit)}</td></tr>`).join('')}</table></div>`:'<div class="success">No low-stock items.</div>'}</div>
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card"><h3 class="section-title">Recipe costing snapshot</h3><div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Cost</th><th>Price</th><th>Food Cost</th></tr>${data.menu.slice(0,8).map(m=>{const c=drinkCost(m.name);return `<tr><td>${esc(m.name)}</td><td class="money">${money(c)}</td><td class="money">${money(m.price)}</td><td>${m.price?pct(c/m.price*100):'0.0%'}</td></tr>`}).join('')}</table></div></div>
+    <div class="card"><h3 class="section-title">Quick actions</h3><div class="toolbar"><button class="btn primary" data-go="pos">Open POS</button><button class="btn" data-go="recipes">Create Recipe</button><button class="btn" data-go="purchases">Record Purchase</button><button class="btn" data-go="ingredients">Update Ingredient Cost</button></div><div class="muted mini">All data is stored locally in this browser. Use Backup/Restore in Settings before changing devices.</div></div>
+  </div>`;
+ },
+ pos(){
+  const cats=[...new Set(data.menu.map(m=>m.category||'Other'))];
+  return `<div class="pos-grid"><div><div class="toolbar no-print"><input class="input" id="posSearch" placeholder="Search menu..." style="max-width:320px"><select class="select" id="posCategory" style="max-width:180px"><option value="">All categories</option>${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div><div class="menu-grid" id="posMenu">${menuCards()}</div></div><div class="card cart"><h3 class="section-title">Current Order</h3>${cart.length?cart.map((it,idx)=>`<div class="cart-row"><div><div style="font-weight:700">${esc(it.name)}</div><div class="mini muted">${money(it.price)} each</div></div><div class="cart-actions"><div class="qtybox"><button data-cart="dec" data-idx="${idx}">−</button><span>${it.qty}</span><button data-cart="inc" data-idx="${idx}">+</button></div><button class="btn small danger" data-cart="remove" data-idx="${idx}">x</button></div></div>`).join(''):'<div class="empty">No items.</div>'}<div class="summary"><div class="summary-line"><span>Subtotal</span><strong>${money(cart.reduce((s,i)=>s+i.price*i.qty,0))}</strong></div><div class="summary-line"><span>Discount</span><input class="input" id="posDiscount" type="number" min="0" step="0.01" value="0" style="max-width:120px;text-align:right"></div><div class="summary-line total"><span>Total</span><span>${money(cart.reduce((s,i)=>s+i.price*i.qty,0)-Number(document.getElementById('posDiscount')?.value||0))}</span></div><div class="summary-line"><span>Payment</span><select class="select" id="posPayment" style="max-width:130px"><option>Cash</option><option>Card</option><option>QR</option><option>Other</option></select></div><button class="btn primary" id="completeSale" style="width:100%;margin-top:10px" ${cart.length?'':'disabled'}>Complete Sale</button></div></div></div>`;
+ },
+ recipes(){
+  const drinks=[...new Set(data.recipes.map(r=>r.drink))].sort();
+  return `<div class="toolbar"><button class="btn primary" id="newRecipe">New Recipe</button><div class="spacer"></div><input class="input" id="recipeSearch" placeholder="Search drink..." style="max-width:260px"></div><div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Ingredients</th><th>Recipe Cost</th><th>Menu Price</th><th>Food Cost</th><th></th></tr>${drinks.map(d=>{const m=menuItem(d),c=drinkCost(d),p=m?.price||0;return `<tr><td>${esc(d)}</td><td>${recipeRows(d).length}</td><td class="money">${money(c)}</td><td class="money">${money(p)}</td><td>${p?pct(c/p*100):'-'}</td><td><button class="btn small" data-edit-recipe="${esc(d)}">Edit</button></td></tr>`}).join('')}</table></div>`;
+ },
+ ingredients(){return `<div class="toolbar"><button class="btn primary" id="newIngredient">Add Ingredient</button><div class="spacer"></div><input class="input" id="ingredientSearch" placeholder="Search ingredient..." style="max-width:260px"></div><div class="table-wrap"><table class="table"><tr><th>Ingredient</th><th>Unit</th><th>Purchase Qty</th><th>Purchase Cost</th><th>Cost/Unit</th><th>Current Stock</th><th>Min Stock</th><th></th></tr>${data.ingredients.map(i=>`<tr><td>${esc(i.name)}</td><td>${esc(i.unit)}</td><td>${Number(i.purchaseQty).toFixed(2)}</td><td class="money">${money(i.purchaseCost)}</td><td class="money">${money(unitCost(i.name))}</td><td>${Number(i.stockQty).toFixed(2)}</td><td>${Number(i.minStock).toFixed(2)}</td><td><button class="btn small" data-edit-ingredient="${i.id}">Edit</button></td></tr>`).join('')}</table></div>`},
+ inventory(){return `<div class="toolbar"><button class="btn" id="adjustStock">Stock Adjustment</button><div class="spacer"></div><input class="input" id="inventorySearch" placeholder="Search ingredient..." style="max-width:260px"></div><div class="table-wrap"><table class="table"><tr><th>Ingredient</th><th>Stock</th><th>Unit</th><th>Min</th><th>Status</th></tr>${data.ingredients.map(i=>{const st=Number(i.stockQty);const min=Number(i.minStock);const cls=st<=0?'bad':st<=min?'warn':'good';const lab=st<=0?'Out':st<=min?'Low':'OK';return `<tr><td>${esc(i.name)}</td><td>${st.toFixed(2)}</td><td>${esc(i.unit)}</td><td>${min.toFixed(2)}</td><td><span class="badge ${cls}">${lab}</span></td></tr>`}).join('')}</table></div>`},
+ purchases(){return `<div class="toolbar"><button class="btn primary" id="newPurchase">Record Purchase</button><div class="spacer"></div><div class="muted mini">Purchases increase stock and update the ingredient's latest unit cost.</div></div><div class="table-wrap"><table class="table"><tr><th>Date</th><th>Supplier</th><th>Ingredient</th><th>Qty</th><th>Unit Cost</th><th>Total</th></tr>${data.purchases.slice().reverse().map(p=>`<tr><td>${p.date}</td><td>${esc(p.supplier||'-')}</td><td>${esc(p.ingredient)}</td><td>${p.qty}</td><td class="money">${money(p.unitCost)}</td><td class="money">${money(p.qty*p.unitCost)}</td></tr>`).join('')}</table></div>`},
+ expenses(){return `<div class="toolbar"><button class="btn primary" id="newExpense">Add Expense</button></div><div class="table-wrap"><table class="table"><tr><th>Date</th><th>Category</th><th>Note</th><th>Amount</th></tr>${data.expenses.slice().reverse().map(e=>`<tr><td>${e.date}</td><td>${esc(e.category)}</td><td>${esc(e.note||'')}</td><td class="money">${money(e.amount)}</td></tr>`).join('')}</table></div>`},
+ waste(){return `<div class="toolbar"><button class="btn primary" id="newWaste">Record Waste</button></div><div class="table-wrap"><table class="table"><tr><th>Date</th><th>Ingredient</th><th>Qty</th><th>Cost</th><th>Reason</th></tr>${data.waste.slice().reverse().map(w=>`<tr><td>${w.date}</td><td>${esc(w.ingredient)}</td><td>${w.qty}</td><td class="money">${money(w.cost)}</td><td>${esc(w.reason||'')}</td></tr>`).join('')}</table></div>`},
+ menu(){return `<div class="toolbar"><button class="btn" id="addMenuItem">Add Menu Item</button><div class="spacer"></div><div class="muted mini">Menu prices are used by POS and profit calculations.</div></div><div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Category</th><th>Recipe Cost</th><th>Selling Price</th><th>Profit</th><th>Food Cost</th><th>Active</th></tr>${data.menu.map(m=>{const c=drinkCost(m.name),p=Number(m.price||0);return `<tr><td>${esc(m.name)}</td><td>${esc(m.category||'Other')}</td><td class="money">${money(c)}</td><td><input class="input menu-price" data-id="${m.id}" value="${p}" type="number" step="0.01" style="width:110px"></td><td class="money">${money(p-c)}</td><td>${p?pct(c/p*100):'-'}</td><td><input type="checkbox" class="menu-active" data-id="${m.id}" ${m.active?'checked':''}></td></tr>`}).join('')}</table></div>`},
+ reports(){
+  const sales=totalSales(),cogs=salesCogs(),exp=expensesTotal(),gross=sales-cogs,net=gross-exp-wasteTotal(); const byDrink={}; data.sales.forEach(o=>(o.items||[]).forEach(it=>{if(!byDrink[it.name])byDrink[it.name]={qty:0,rev:0,cost:0};byDrink[it.name].qty+=it.qty;byDrink[it.name].rev+=it.qty*it.price;byDrink[it.name].cost+=it.qty*drinkCost(it.name)}));
+  return `<div class="toolbar no-print"><button class="btn primary" onclick="window.print()">Print Report</button><button class="btn" id="exportSalesCsv">Export Sales CSV</button></div><div class="grid kpi">${kpi('Total Sales',money(sales),`${data.sales.length} orders`)}${kpi('COGS',money(cogs),sales?pct(cogs/sales*100):'0.0%')}${kpi('Gross Profit',money(gross),'Sales minus recipe cost')}${kpi('Estimated Net Profit',money(net),'After expenses and waste')}</div><div class="card" style="margin-top:16px"><h3 class="section-title">Product performance</h3><div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Qty Sold</th><th>Revenue</th><th>Recipe Cost</th><th>Contribution</th><th>Food Cost</th></tr>${Object.entries(byDrink).sort((a,b)=>b[1].rev-a[1].rev).map(([n,v])=>`<tr><td>${esc(n)}</td><td>${v.qty}</td><td class="money">${money(v.rev)}</td><td class="money">${money(v.cost)}</td><td class="money">${money(v.rev-v.cost)}</td><td>${v.rev?pct(v.cost/v.rev*100):'-'}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No sales yet.</td></tr>'}</table></div></div>`},
+ settings(){return `<div class="grid two"><div class="card"><h3 class="section-title">Cafe settings</h3><div class="formgrid"><div class="field"><label>Café name</label><input class="input" id="setName" value="${esc(data.settings.cafeName)}"></div><div class="field"><label>Currency</label><input class="input" id="setCurrency" value="${esc(data.settings.currency)}"></div><div class="field"><label>Food cost target %</label><input class="input" id="setTarget" type="number" value="${data.settings.defaultFoodCostTarget}"></div><div class="field"><label>Tax %</label><input class="input" id="setTax" type="number" value="${data.settings.taxPercent}"></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Save Settings</button></div><div class="card"><h3 class="section-title">Backup & Restore</h3><div class="toolbar"><button class="btn primary" id="exportBackup">Export Backup</button><label class="btn">Import Backup<input id="importBackup" type="file" accept="application/json" class="hidden"></label><button class="btn danger" id="resetDemo">Reset to Demo Data</button></div><div class="muted mini">Backups are JSON files containing ingredients, recipes, menu, sales, purchases, expenses, waste, suppliers, and settings.</div></div></div><div class="card" style="margin-top:16px"><h3 class="section-title">About Connect Cafe V1</h3><div class="muted">Offline browser-based café management prototype for Connect Cafe. Data persists locally on this device/browser. No domain or hosting is required. The data model is structured so it can later move to a server/database for multi-device use.</div><div style="margin-top:12px"><a class="btn" href="https://www.instagram.com/connectcafe2026" target="_blank" rel="noopener noreferrer">Open @connectcafe2026 on Instagram</a></div></div>`}
+};
+function kpi(label,value,sub){return `<div class="card"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div><div class="sub">${esc(sub)}</div></div>`}
+function menuCards(){const q=(document.getElementById('posSearch')?.value||'').toLowerCase();const cat=document.getElementById('posCategory')?.value||'';return data.menu.filter(m=>m.active && (!q||m.name.toLowerCase().includes(q)) && (!cat||m.category===cat)).map(m=>`<div class="menu-item"><div class="name">${esc(m.name)}</div><div class="mini muted">${esc(m.category||'Other')}</div><div class="price">${money(m.price)}</div><button class="btn primary add-menu" data-name="${esc(m.name)}">Add</button></div>`).join('')||'<div class="empty">No menu items found.</div>'}
+function bind(){
+ document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{currentView=b.dataset.view;render()});
+ document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{currentView=b.dataset.go;render()});
+ if(currentView==='pos'){document.getElementById('posSearch')?.addEventListener('input',()=>document.getElementById('posMenu').innerHTML=menuCards());document.getElementById('posCategory')?.addEventListener('change',()=>document.getElementById('posMenu').innerHTML=menuCards());document.querySelectorAll('.add-menu').forEach(b=>b.onclick=()=>{const n=b.dataset.name;const ex=cart.find(x=>x.name===n);if(ex)ex.qty++;else{const m=menuItem(n);cart.push({name:n,price:Number(m.price||0),qty:1})}render()});document.querySelectorAll('[data-cart]').forEach(b=>b.onclick=()=>{const i=+b.dataset.idx;if(b.dataset.cart==='inc')cart[i].qty++;if(b.dataset.cart==='dec'){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1)}if(b.dataset.cart==='remove')cart.splice(i,1);render()});document.getElementById('completeSale')?.addEventListener('click',completeSale)}
+ document.getElementById('newIngredient')?.addEventListener('click',()=>ingredientModal());document.querySelectorAll('[data-edit-ingredient]').forEach(b=>b.onclick=()=>ingredientModal(data.ingredients.find(i=>i.id===b.dataset.editIngredient)));
+ document.getElementById('newRecipe')?.addEventListener('click',()=>recipeModal());document.querySelectorAll('[data-edit-recipe]').forEach(b=>b.onclick=()=>recipeModal(b.dataset.editRecipe));
+ document.getElementById('newPurchase')?.addEventListener('click',purchaseModal);document.getElementById('newExpense')?.addEventListener('click',expenseModal);document.getElementById('newWaste')?.addEventListener('click',wasteModal);document.getElementById('adjustStock')?.addEventListener('click',stockAdjustModal);document.getElementById('addMenuItem')?.addEventListener('click',menuItemModal);
+ document.querySelectorAll('.menu-price').forEach(i=>i.addEventListener('change',()=>{const m=data.menu.find(x=>x.id===i.dataset.id);m.price=Number(i.value||0);save();render()}));document.querySelectorAll('.menu-active').forEach(i=>i.addEventListener('change',()=>{const m=data.menu.find(x=>x.id===i.dataset.id);m.active=i.checked;save()}));
+ document.getElementById('saveSettings')?.addEventListener('click',()=>{data.settings.cafeName=document.getElementById('setName').value;data.settings.currency=document.getElementById('setCurrency').value;data.settings.defaultFoodCostTarget=Number(document.getElementById('setTarget').value||35);data.settings.taxPercent=Number(document.getElementById('setTax').value||0);save();render()});
+ document.getElementById('exportBackup')?.addEventListener('click',exportBackup);document.getElementById('importBackup')?.addEventListener('change',importBackup);document.getElementById('resetDemo')?.addEventListener('click',()=>{if(confirm('Reset all local data to the original demo data?')){data=JSON.parse(JSON.stringify(SEED));save();cart=[];render()}});document.getElementById('exportSalesCsv')?.addEventListener('click',exportSalesCsv);
+}
+function openModal(title,body,footer=''){document.getElementById('modalBox').innerHTML=`<div class="modal-head"><h3 style="margin:0">${esc(title)}</h3><button class="btn" onclick="closeModal()">Close</button></div>${body}${footer}`;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function ingredientModal(item){const i=item||{id:uid('ing'),name:'',unit:'g',purchaseQty:1000,purchaseCost:100,stockQty:1000,minStock:100};openModal(item?'Edit Ingredient':'Add Ingredient',`<div class="formgrid"><div class="field"><label>Name</label><input class="input" id="mi_name" value="${esc(i.name)}"></div><div class="field"><label>Unit</label><input class="input" id="mi_unit" value="${esc(i.unit)}"></div><div class="field"><label>Purchase Qty</label><input class="input" id="mi_qty" type="number" step="0.01" value="${i.purchaseQty}"></div><div class="field"><label>Purchase Cost</label><input class="input" id="mi_cost" type="number" step="0.01" value="${i.purchaseCost}"></div><div class="field"><label>Current Stock</label><input class="input" id="mi_stock" type="number" step="0.01" value="${i.stockQty}"></div><div class="field"><label>Minimum Stock</label><input class="input" id="mi_min" type="number" step="0.01" value="${i.minStock}"></div></div><div style="margin-top:12px">Cost per unit: <strong id="mi_preview">${money(unitCost(i.name))}</strong></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div>${item?'<button class="btn danger" id="delIng">Delete</button>':''}<button class="btn primary" id="saveIng">Save</button></div>`);document.getElementById('saveIng').onclick=()=>{const x={id:i.id,name:document.getElementById('mi_name').value.trim(),unit:document.getElementById('mi_unit').value.trim()||'unit',purchaseQty:Number(document.getElementById('mi_qty').value||0),purchaseCost:Number(document.getElementById('mi_cost').value||0),stockQty:Number(document.getElementById('mi_stock').value||0),minStock:Number(document.getElementById('mi_min').value||0)};if(!x.name){alert('Ingredient name is required.');return}const old=data.ingredients.find(z=>z.id===x.id);if(old)Object.assign(old,x);else data.ingredients.push(x);save();closeModal();render()};document.getElementById('delIng')?.addEventListener('click',()=>{if(confirm('Delete ingredient?')){data.ingredients=data.ingredients.filter(z=>z.id!==i.id);data.recipes=data.recipes.filter(r=>r.ingredient!==i.name);save();closeModal();render()}})}
+function recipeModal(drinkName){const existing=drinkName?recipeRows(drinkName):[];const name=drinkName||'';const m=menuItem(name);const rowHTML=r=>`<div class="formgrid recipe-row"><div class="field" style="grid-column:span 2"><label>Ingredient</label><select class="select ri_ing">${data.ingredients.map(i=>`<option ${i.name===r.ingredient?'selected':''}>${esc(i.name)}</option>`).join('')}</select></div><div class="field"><label>Qty</label><input class="input ri_qty" type="number" step="0.01" value="${r.qty}"></div><div class="field"><label>&nbsp;</label><button class="btn danger ri_del">Remove</button></div></div>`;openModal(drinkName?'Edit Recipe':'New Recipe',`<div class="formgrid"><div class="field"><label>Drink name</label><input class="input" id="r_name" value="${esc(name)}" ${drinkName?'readonly':''}></div><div class="field"><label>Menu price</label><input class="input" id="r_price" type="number" step="0.01" value="${m?.price||200}"></div><div class="field"><label>Category</label><input class="input" id="r_cat" value="${esc(m?.category||'Other')}"></div></div><div style="margin-top:16px"><div class="toolbar"><strong>Recipe ingredients</strong><div class="spacer"></div><button class="btn" id="addRecipeRow">Add Ingredient</button></div><div id="recipeRows">${(existing.length?existing:[{ingredient:data.ingredients[0]?.name||'',qty:1}]).map(rowHTML).join('')}</div></div><div class="card" style="margin-top:12px;background:#f8fafc">Current recipe cost: <strong id="recipeLiveCost">${money(drinkName?drinkCost(drinkName):0)}</strong></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div>${drinkName?'<button class="btn danger" id="delRecipe">Delete Recipe</button>':''}<button class="btn primary" id="saveRecipe">Save Recipe</button></div>`);const refreshCost=()=>{let c=0;document.querySelectorAll('.recipe-row').forEach(row=>{const ing=row.querySelector('.ri_ing').value;const q=Number(row.querySelector('.ri_qty').value||0);c+=q*unitCost(ing)});document.getElementById('recipeLiveCost').textContent=money(c)};document.querySelectorAll('.ri_qty,.ri_ing').forEach(e=>e.addEventListener('input',refreshCost));document.querySelectorAll('.ri_del').forEach(b=>b.onclick=()=>{b.closest('.recipe-row').remove();refreshCost()});document.getElementById('addRecipeRow').onclick=()=>{const temp=document.createElement('div');temp.innerHTML=rowHTML({ingredient:data.ingredients[0]?.name||'',qty:1});const row=temp.firstElementChild;document.getElementById('recipeRows').appendChild(row);row.querySelector('.ri_del').onclick=()=>{row.remove();refreshCost()};row.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',refreshCost))};document.getElementById('saveRecipe').onclick=()=>{const n=document.getElementById('r_name').value.trim();if(!n){alert('Drink name is required.');return}data.recipes=data.recipes.filter(r=>r.drink!==n);document.querySelectorAll('.recipe-row').forEach(row=>data.recipes.push({drink:n,ingredient:row.querySelector('.ri_ing').value,qty:Number(row.querySelector('.ri_qty').value||0)}));let mm=menuItem(n);if(!mm){mm={id:uid('menu'),name:n,price:Number(document.getElementById('r_price').value||200),category:document.getElementById('r_cat').value||'Other',active:true};data.menu.push(mm)}else{mm.price=Number(document.getElementById('r_price').value||mm.price);mm.category=document.getElementById('r_cat').value||mm.category}save();closeModal();render()};document.getElementById('delRecipe')?.addEventListener('click',()=>{if(confirm('Delete this recipe and keep menu item?')){data.recipes=data.recipes.filter(r=>r.drink!==drinkName);save();closeModal();render()}});}
+function purchaseModal(){openModal('Record Purchase',`<div class="formgrid"><div class="field"><label>Date</label><input class="input" id="p_date" type="date" value="${todayKey()}"></div><div class="field"><label>Supplier</label><input class="input" id="p_sup" value=""></div><div class="field"><label>Ingredient</label><select class="select" id="p_ing">${data.ingredients.map(i=>`<option>${esc(i.name)}</option>`).join('')}</select></div><div class="field"><label>Quantity</label><input class="input" id="p_qty" type="number" step="0.01"></div><div class="field"><label>Total Purchase Cost</label><input class="input" id="p_total" type="number" step="0.01"></div></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="savePurchase">Save Purchase</button></div>`);document.getElementById('savePurchase').onclick=()=>{const ing=ingredient(document.getElementById('p_ing').value);const q=Number(document.getElementById('p_qty').value||0),tot=Number(document.getElementById('p_total').value||0);if(!ing||q<=0||tot<0){alert('Enter a valid ingredient, quantity and cost.');return}const uc=tot/q;ing.stockQty=Number(ing.stockQty||0)+q;ing.purchaseQty=q;ing.purchaseCost=tot;data.purchases.push({id:uid('pur'),date:document.getElementById('p_date').value,supplier:document.getElementById('p_sup').value,ingredient:ing.name,qty:q,unitCost:uc});save();closeModal();render()}}
+function expenseModal(){openModal('Add Expense',`<div class="formgrid"><div class="field"><label>Date</label><input class="input" id="e_date" type="date" value="${todayKey()}"></div><div class="field"><label>Category</label><input class="input" id="e_cat" value="General"></div><div class="field"><label>Amount</label><input class="input" id="e_amt" type="number" step="0.01"></div><div class="field"><label>Note</label><input class="input" id="e_note"></div></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="saveExpense">Save Expense</button></div>`);document.getElementById('saveExpense').onclick=()=>{data.expenses.push({id:uid('exp'),date:document.getElementById('e_date').value,category:document.getElementById('e_cat').value,amount:Number(document.getElementById('e_amt').value||0),note:document.getElementById('e_note').value});save();closeModal();render()}}
+function wasteModal(){openModal('Record Waste',`<div class="formgrid"><div class="field"><label>Date</label><input class="input" id="w_date" type="date" value="${todayKey()}"></div><div class="field"><label>Ingredient</label><select class="select" id="w_ing">${data.ingredients.map(i=>`<option>${esc(i.name)}</option>`).join('')}</select></div><div class="field"><label>Quantity</label><input class="input" id="w_qty" type="number" step="0.01"></div><div class="field"><label>Reason</label><input class="input" id="w_reason" value="Spillage"></div></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="saveWaste">Save Waste</button></div>`);document.getElementById('saveWaste').onclick=()=>{const ing=ingredient(document.getElementById('w_ing').value),q=Number(document.getElementById('w_qty').value||0);if(!ing||q<=0)return;ing.stockQty=Math.max(0,Number(ing.stockQty||0)-q);data.waste.push({id:uid('waste'),date:document.getElementById('w_date').value,ingredient:ing.name,qty:q,cost:q*unitCost(ing.name),reason:document.getElementById('w_reason').value});save();closeModal();render()}}
+function stockAdjustModal(){openModal('Stock Adjustment',`<div class="formgrid"><div class="field"><label>Ingredient</label><select class="select" id="a_ing">${data.ingredients.map(i=>`<option>${esc(i.name)}</option>`).join('')}</select></div><div class="field"><label>New Stock Quantity</label><input class="input" id="a_qty" type="number" step="0.01"></div><div class="field"><label>Reason</label><input class="input" id="a_reason" value="Count correction"></div></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="saveAdj">Save</button></div>`);document.getElementById('saveAdj').onclick=()=>{const i=ingredient(document.getElementById('a_ing').value);i.stockQty=Number(document.getElementById('a_qty').value||0);save();closeModal();render()}}
+function menuItemModal(){openModal('Add Menu Item',`<div class="formgrid"><div class="field"><label>Drink</label><select class="select" id="mm_drink">${[...new Set(data.recipes.map(r=>r.drink))].sort().map(d=>`<option>${esc(d)}</option>`).join('')}</select></div><div class="field"><label>Category</label><input class="input" id="mm_cat" value="Other"></div><div class="field"><label>Price</label><input class="input" id="mm_price" type="number" step="0.01" value="200"></div></div>`,`<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="saveMenuItem">Save</button></div>`);document.getElementById('saveMenuItem').onclick=()=>{const name=document.getElementById('mm_drink').value;if(!menuItem(name))data.menu.push({id:uid('menu'),name,price:Number(document.getElementById('mm_price').value||200),category:document.getElementById('mm_cat').value||'Other',active:true});save();closeModal();render()}}
+function completeSale(){if(!cart.length)return;const discount=Number(document.getElementById('posDiscount').value||0);const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);const total=Math.max(0,subtotal-discount);const sale={id:uid('sale'),date:todayKey(),time:new Date().toLocaleTimeString(),items:JSON.parse(JSON.stringify(cart)),subtotal,discount,total,payment:document.getElementById('posPayment').value};data.sales.push(sale);cart.forEach(it=>recipeRows(it.name).forEach(r=>{const ing=ingredient(r.ingredient);if(ing)ing.stockQty=Math.max(0,Number(ing.stockQty||0)-Number(r.qty)*it.qty)}));save();alert(`Sale recorded: ${money(total)}`);cart=[];render()}
+function download(filename,content,type='application/json'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+function exportBackup(){download(`cafe-backup-${todayKey()}.json`,JSON.stringify(data,null,2))}
+function importBackup(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.ingredients||!x.recipes)throw Error('Invalid backup');data=x;save();render();alert('Backup imported successfully.')}catch(err){alert('Invalid backup file.')}};r.readAsText(f)}
+function exportSalesCsv(){let csv='Date,Time,Order,Drink,Qty,Price,Total,Payment\n';data.sales.forEach(o=>(o.items||[]).forEach(it=>csv+=`${o.date},"${o.time}","${o.id}","${it.name}",${it.qty},${it.price},${it.qty*it.price},"${o.payment}"\n`));download(`sales-${todayKey()}.csv`,csv,'text/csv')}
+
+/* ---------- Enhanced floor/table POS layer ---------- */
+if(!data.tables){
+  data.tables = Array.from({length:12},(_,i)=>({id:'table_'+(i+1),name:'Table '+(i+1),active:true}));
+}
+if(!data.openOrders){data.openOrders={};}
+let currentTableName='Table 1';
+function tableOrder(name){return data.openOrders[name]||[]}
+function setTableOrder(name,items){data.openOrders[name]=JSON.parse(JSON.stringify(items||[]));save()}
+function tableTotal(name){return tableOrder(name).reduce((s,i)=>s+Number(i.price||0)*Number(i.qty||0),0)}
+function tableOccupied(name){return tableOrder(name).length>0}
+function ensureCurrentTable(){
+  const available=data.tables.filter(t=>t.active!==false).map(t=>t.name);
+  if(currentTableName!=='Takeaway' && !available.includes(currentTableName)) currentTableName=available[0]||'Takeaway';
+  cart=JSON.parse(JSON.stringify(tableOrder(currentTableName)));
+}
+ensureCurrentTable();
+function moneyShort(v){return money(v).replace(/\.00$/,'')}
+function salesForLastDays(n=7){
+  const out=[]; const now=new Date();
+  for(let i=n-1;i>=0;i--){const d=new Date(now);d.setHours(0,0,0,0);d.setDate(d.getDate()-i);const key=todayKey(d);const s=data.sales.filter(x=>x.date===key).reduce((a,o)=>a+saleTotal(o),0);out.push({key,label:d.toLocaleDateString(undefined,{weekday:'short'}),sales:s})}
+  return out;
+}
+function enhancedDashboard(){
+  const ts=todaySales();
+  const sales=ts.reduce((s,o)=>s+saleTotal(o),0);
+  const cogs=ts.reduce((s,o)=>s+(o.items||[]).reduce((a,it)=>a+drinkCost(it.name)*it.qty,0),0);
+  const exp=data.expenses.filter(e=>e.date===todayKey()).reduce((s,e)=>s+Number(e.amount||0),0);
+  const low=data.ingredients.filter(i=>Number(i.stockQty||0)<=Number(i.minStock||0));
+  const trend=salesForLastDays(7); const max=Math.max(...trend.map(x=>x.sales),1);
+  const counts={}; const payments={};
+  data.sales.forEach(o=>{payments[o.payment]=(payments[o.payment]||0)+saleTotal(o);(o.items||[]).forEach(it=>counts[it.name]=(counts[it.name]||0)+it.qty)})
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const payTotal=Object.values(payments).reduce((a,b)=>a+b,0)||1;
+  const activeTables=data.tables.filter(t=>t.active!==false); const occupied=activeTables.filter(t=>tableOccupied(t.name)).length; const occPct=activeTables.length?occupied/activeTables.length*100:0;
+  return `<div class="grid kpi">
+    ${kpi('Today Sales',moneyShort(sales),`${ts.length} completed order(s)`)}
+    ${kpi('Today COGS',moneyShort(cogs),`Food cost ${sales?pct(cogs/sales*100):'0.0%'}`)}
+    ${kpi('Gross Profit',moneyShort(sales-cogs),`Margin ${sales?pct((sales-cogs)/sales*100):'0.0%'}`)}
+    ${kpi('Net Estimate',moneyShort(sales-cogs-exp),`Operating expenses ${moneyShort(exp)}`)}
+  </div>
+  <div class="dashboard-hero">
+    <div class="card hero-card">
+      <div class="hero-small">Connect Cafe • Daily Overview</div>
+      <div class="hero-title">Keep the café moving, one table at a time.</div>
+      <div class="hero-sub">Orders can now stay open on their table until the guest is ready to pay. Stock, recipe cost, and sales remain connected automatically.</div>
+      <div class="hero-actions"><button class="btn primary" data-go="pos">Open POS</button><button class="btn" data-go="recipes">Update Recipes</button><button class="btn" data-go="inventory">Check Inventory</button></div>
+    </div>
+    <div class="card"><div class="section-title">Table occupancy</div><div class="occupancy-line"><span>${occupied} of ${activeTables.length} tables occupied</span><strong>${pct(occPct)}</strong></div><div class="progress"><span style="width:${occPct}%"></span></div><div style="height:10px"></div><div class="stat-grid"><div class="mini-stat"><div class="label">Open orders</div><div class="val">${occupied}</div></div><div class="mini-stat"><div class="label">Low stock</div><div class="val">${low.length}</div></div><div class="mini-stat"><div class="label">Menu items</div><div class="val">${data.menu.filter(m=>m.active!==false).length}</div></div></div></div>
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card chart-card"><div class="chart-head"><div><h3 class="section-title" style="margin-bottom:3px">Sales trend</h3><div class="mini muted">Last 7 days</div></div><strong>${moneyShort(trend.reduce((a,b)=>a+b.sales,0))}</strong></div><div class="chart-wrap">${trend.map(x=>`<div class="bar-col"><div class="bar-value">${x.sales?moneyShort(x.sales):''}</div><div class="bar-track"><span class="bar-fill" style="height:${Math.max(2,(x.sales/max)*100)}%"></span></div><div class="bar-label">${x.label}</div></div>`).join('')}</div></div>
+    <div class="card"><h3 class="section-title">Payment mix</h3>${['Cash','Card','QR','Other'].map(k=>{const v=payments[k]||0;return `<div class="pay-row"><div class="pay-left"><span class="pay-dot"></span><span>${k}</span></div><div class="pay-bar"><span style="width:${Math.max(2,v/payTotal*100)}%"></span></div><strong>${moneyShort(v)}</strong></div>`}).join('')}</div>
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card"><h3 class="section-title">Top selling drinks</h3>${top.length?`<div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Qty</th><th>Revenue</th><th>Profit</th></tr>${top.map(([n,q])=>{const p=Number(menuItem(n)?.price||0),c=drinkCost(n);return `<tr><td>${esc(n)}</td><td>${q}</td><td class="money">${money(q*p)}</td><td class="money">${money(q*(p-c))}</td></tr>`}).join('')}</table></div>`:'<div class="empty">No sales yet.</div>'}</div>
+    <div class="card"><h3 class="section-title">Low stock watch</h3>${low.length?`<div class="table-wrap"><table class="table"><tr><th>Ingredient</th><th>On hand</th><th>Minimum</th><th>Status</th></tr>${low.slice(0,7).map(i=>{const st=Number(i.stockQty||0),mn=Number(i.minStock||0),cls=st<=0?'bad':'warn';return `<tr><td>${esc(i.name)}</td><td>${st.toFixed(2)} ${esc(i.unit)}</td><td>${mn.toFixed(2)} ${esc(i.unit)}</td><td><span class="badge ${cls}">${st<=0?'Out':'Low'}</span></td></tr>`}).join('')}</table></div>`:'<div class="success">No low-stock ingredients right now.</div>'}</div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3 class="section-title">Recipe cost watch</h3><div class="table-wrap"><table class="table"><tr><th>Drink</th><th>Cost</th><th>Price</th><th>Food Cost</th><th>Margin</th></tr>${data.menu.slice(0,10).map(m=>{const c=drinkCost(m.name),p=Number(m.price||0),fc=p?c/p*100:0;return `<tr><td>${esc(m.name)}</td><td class="money">${money(c)}</td><td class="money">${money(p)}</td><td>${p?pct(fc):'-'}</td><td class="money">${money(p-c)}</td></tr>`}).join('')}</table></div></div>`;
+}
+views.dashboard=enhancedDashboard;
+views.pos=function(){
+  ensureCurrentTable();
+  const cats=[...new Set(data.menu.filter(m=>m.active!==false).map(m=>m.category||'Other'))];
+  const tables=[...data.tables.filter(t=>t.active!==false),{id:'takeaway',name:'Takeaway',active:true,takeaway:true}];
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  return `<div class="pos-shell">
+    <div class="card" style="padding:14px 16px"><div class="table-toolbar"><div><div class="section-title" style="margin:0">Floor plan</div><div class="hint">Select a table, add items, and leave the order open until the guest is ready to pay.</div></div><button class="btn small" id="manageTables">Manage Tables</button></div><div class="table-strip" style="margin-top:12px">${tables.map(t=>{const active=currentTableName===t.name,occ=takeawayOccupied(t.name);return `<div class="table-card ${active?'active ':''}${occ?'occupied ':''}${t.takeaway?'takeaway':''}" data-table="${esc(t.name)}"><div class="table-top"><div class="table-name">${esc(t.name)}</div><span class="status-dot"></span></div><div class="table-meta">${occ?'Order open':'Available'}${!t.takeaway&&t.capacity?` • ${t.capacity} seats`:''}</div><div class="table-amount">${occ?moneyShort(tableTotal(t.name)):'Ready'}</div></div>`}).join('')}</div></div>
+    <div class="pos-main">
+      <div class="menu-panel">
+        <div class="toolbar no-print"><input class="input" id="posSearch" placeholder="Search menu..." style="max-width:320px"><select class="select" id="posCategory" style="max-width:180px"><option value="">All categories</option>${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select><div class="spacer"></div><span class="badge good">${esc(currentTableName)} · ${cart.length?`${cart.reduce((s,i)=>s+i.qty,0)} item(s)`:'No items'}</span></div>
+        <div class="menu-grid" id="posMenu">${menuCards()}</div>
+      </div>
+      <div class="card cart cart-panel"><div class="table-toolbar"><div><h3 class="section-title" style="margin:0">${esc(currentTableName)}</h3><div class="mini muted">${cart.length?'Open order · keep adding until payment':'No items yet'}</div></div>${cart.length?'<button class="btn small danger" id="clearTableOrder">Clear</button>':''}</div>
+        ${cart.length?cart.map((it,idx)=>`<div class="cart-row"><div><div style="font-weight:700">${esc(it.name)}</div><div class="mini muted">${money(it.price)} each</div></div><div class="cart-actions"><div class="qtybox"><button data-cart="dec" data-idx="${idx}">−</button><span>${it.qty}</span><button data-cart="inc" data-idx="${idx}">+</button></div><button class="btn small danger" data-cart="remove" data-idx="${idx}">x</button></div></div>`).join(''):'<div class="empty">Start the order from the menu. It will stay attached to this table.</div>'}
+        <div class="summary"><div class="summary-line"><span>Subtotal</span><strong>${money(subtotal)}</strong></div><div class="summary-line"><span>Discount</span><input class="input" id="posDiscount" type="number" min="0" step="0.01" value="0" style="max-width:120px;text-align:right"></div><div class="summary-line total"><span>Total</span><span id="posTotal">${money(Math.max(0,subtotal))}</span></div><div class="field" style="margin-top:8px"><label>Payment method</label><select class="select" id="posPayment"><option>Cash</option><option>Card</option><option>QR</option><option>Other</option></select></div><div class="field" style="margin-top:8px"><label>Order note (optional)</label><input class="input" id="posNote" placeholder="e.g. less sugar"></div><button class="btn primary" id="completeSale" style="width:100%;margin-top:12px" ${cart.length?'':'disabled'}>Pay & Close Table</button></div>
+      </div>
+    </div></div>`;
+}
+function takeawayOccupied(name){return tableOccupied(name)}
+function selectTable(name){
+  setTableOrder(currentTableName,cart);
+  currentTableName=name;
+  cart=JSON.parse(JSON.stringify(tableOrder(name)));
+  render();
+}
+function tableManagerModal(){
+  openModal('Manage Tables',`<div class="muted mini" style="margin-bottom:12px">Rename tables or add more. Existing open orders stay attached to the table name.</div><div id="tableEditor">${data.tables.map((t,idx)=>`<div class="formgrid table-edit-row" data-idx="${idx}" style="margin-bottom:8px"><div class="field" style="grid-column:span 3"><label>Table ${idx+1}</label><input class="input te_name" value="${esc(t.name)}"></div><div class="field"><label>Active</label><div style="padding-top:9px"><input type="checkbox" class="te_active" ${t.active!==false?'checked':''}></div></div></div>`).join('')}</div><div class="toolbar" style="margin-top:12px"><button class="btn" id="addNewTable">+ Add Table</button></div>`, `<div class="toolbar" style="margin-top:16px"><div class="spacer"></div><button class="btn primary" id="saveTables">Save Tables</button></div>`);
+  document.getElementById('addNewTable').onclick=()=>{
+    const idx=data.tables.length+1; const wrap=document.getElementById('tableEditor'); const row=document.createElement('div'); row.className='formgrid table-edit-row'; row.style.marginBottom='8px'; row.innerHTML=`<div class="field" style="grid-column:span 3"><label>Table ${idx}</label><input class="input te_name" value="Table ${idx}"></div><div class="field"><label>Active</label><div style="padding-top:9px"><input type="checkbox" class="te_active" checked></div></div>`; wrap.appendChild(row);
+  };
+  document.getElementById('saveTables').onclick=()=>{
+    const rows=[...document.querySelectorAll('.table-edit-row')]; const oldNames=data.tables.map(t=>t.name); const next=[]; const used=new Set();
+    rows.forEach((row,idx)=>{const name=row.querySelector('.te_name').value.trim()||`Table ${idx+1}`; if(used.has(name)) return; used.add(name); next.push({id:data.tables[idx]?.id||uid('table'),name,active:row.querySelector('.te_active').checked});});
+    const migrated={}; Object.keys(data.openOrders||{}).forEach(k=>{const pos=oldNames.indexOf(k); const nn=pos>=0&&next[pos]?next[pos].name:k; migrated[nn]=data.openOrders[k]||[]}); data.openOrders=migrated; data.tables=next.length?next:[{id:uid('table'),name:'Table 1',active:true}];
+    if(!data.tables.some(t=>t.name===currentTableName)) currentTableName=data.tables[0].name; save(); closeModal(); render();
+  };
+}
+function completeSale(){
+  if(!cart.length)return;
+  const discount=Math.max(0,Number(document.getElementById('posDiscount')?.value||0));
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0); const total=Math.max(0,subtotal-discount);
+  const payment=document.getElementById('posPayment')?.value||'Cash'; const note=document.getElementById('posNote')?.value||'';
+  const sale={id:uid('sale'),date:todayKey(),time:new Date().toLocaleTimeString(),table:currentTableName,items:JSON.parse(JSON.stringify(cart)),subtotal,discount,total,payment,note};
+  data.sales.push(sale);
+  cart.forEach(it=>recipeRows(it.name).forEach(r=>{const ing=ingredient(r.ingredient);if(ing)ing.stockQty=Math.max(0,Number(ing.stockQty||0)-Number(r.qty)*it.qty)}));
+  delete data.openOrders[currentTableName]; save(); alert(`${currentTableName} closed • ${money(total)}`); cart=[]; render();
+}
+function enhancedBind(){
+  document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{setTableOrder(currentTableName,cart);currentView=b.dataset.view;render()});
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{setTableOrder(currentTableName,cart);currentView=b.dataset.go;render()});
+  document.querySelectorAll('[data-table]').forEach(b=>b.onclick=()=>selectTable(b.dataset.table));
+  if(currentView==='pos'){
+    document.getElementById('manageTables')?.addEventListener('click',tableManagerModal);
+    document.getElementById('posSearch')?.addEventListener('input',()=>document.getElementById('posMenu').innerHTML=menuCards());
+    document.getElementById('posCategory')?.addEventListener('change',()=>document.getElementById('posMenu').innerHTML=menuCards());
+    document.querySelectorAll('.add-menu').forEach(b=>b.onclick=()=>{const n=b.dataset.name;const ex=cart.find(x=>x.name===n);if(ex)ex.qty++;else{const m=menuItem(n);cart.push({name:n,price:Number(m.price||0),qty:1})}setTableOrder(currentTableName,cart);render()});
+    document.querySelectorAll('[data-cart]').forEach(b=>b.onclick=()=>{const i=+b.dataset.idx;if(b.dataset.cart==='inc')cart[i].qty++;if(b.dataset.cart==='dec'){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1)}if(b.dataset.cart==='remove')cart.splice(i,1);setTableOrder(currentTableName,cart);render()});
+    document.getElementById('clearTableOrder')?.addEventListener('click',()=>{if(confirm(`Clear the open order on ${currentTableName}?`)){delete data.openOrders[currentTableName];cart=[];save();render()}});
+    document.getElementById('posDiscount')?.addEventListener('input',()=>{const st=cart.reduce((s,i)=>s+i.price*i.qty,0);const d=Math.max(0,Number(document.getElementById('posDiscount').value||0));const el=document.getElementById('posTotal');if(el)el.textContent=money(Math.max(0,st-d))});
+    document.getElementById('completeSale')?.addEventListener('click',completeSale);
+  }
+  document.getElementById('newIngredient')?.addEventListener('click',()=>ingredientModal());
+  document.querySelectorAll('[data-edit-ingredient]').forEach(b=>b.onclick=()=>ingredientModal(data.ingredients.find(i=>i.id===b.dataset.editIngredient)));
+  document.getElementById('newRecipe')?.addEventListener('click',()=>recipeModal());
+  document.querySelectorAll('[data-edit-recipe]').forEach(b=>b.onclick=()=>recipeModal(b.dataset.editRecipe));
+  document.getElementById('newPurchase')?.addEventListener('click',purchaseModal); document.getElementById('newExpense')?.addEventListener('click',expenseModal); document.getElementById('newWaste')?.addEventListener('click',wasteModal); document.getElementById('adjustStock')?.addEventListener('click',stockAdjustModal); document.getElementById('addMenuItem')?.addEventListener('click',menuItemModal);
+  document.querySelectorAll('.menu-price').forEach(i=>i.addEventListener('change',()=>{const m=data.menu.find(x=>x.id===i.dataset.id);m.price=Number(i.value||0);save();render()}));
+  document.querySelectorAll('.menu-active').forEach(i=>i.addEventListener('change',()=>{const m=data.menu.find(x=>x.id===i.dataset.id);m.active=i.checked;save()}));
+  document.getElementById('saveSettings')?.addEventListener('click',()=>{data.settings.cafeName=document.getElementById('setName').value;data.settings.currency=document.getElementById('setCurrency').value;data.settings.defaultFoodCostTarget=Number(document.getElementById('setTarget').value||35);data.settings.taxPercent=Number(document.getElementById('setTax').value||0);save();render()});
+  document.getElementById('exportBackup')?.addEventListener('click',exportBackup); document.getElementById('importBackup')?.addEventListener('change',importBackup); document.getElementById('resetDemo')?.addEventListener('click',()=>{if(confirm('Reset all local data to the original demo data?')){data=JSON.parse(JSON.stringify(SEED));data.tables=Array.from({length:12},(_,i)=>({id:'table_'+(i+1),name:'Table '+(i+1),active:true}));data.openOrders={};save();cart=[];currentTableName='Table 1';render()}}); document.getElementById('exportSalesCsv')?.addEventListener('click',exportSalesCsv);
+}
+bind=enhancedBind;
+
+
+importBackup = function(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.ingredients||!x.recipes)throw Error('Invalid backup');data=x;data.tables=data.tables?.length?data.tables:Array.from({length:12},(_,i)=>({id:'table_'+(i+1),name:'Table '+(i+1),active:true}));data.openOrders=data.openOrders||{};data.sales=data.sales||[];data.purchases=data.purchases||[];data.expenses=data.expenses||[];data.waste=data.waste||[];data.menu=data.menu||[];data.settings=data.settings||JSON.parse(JSON.stringify(SEED.settings));currentTableName=data.tables.find(t=>t.active!==false)?.name||'Takeaway';cart=JSON.parse(JSON.stringify(tableOrder(currentTableName)));save();render();alert('Backup imported successfully.')}catch(err){alert('Invalid backup file.')}};r.readAsText(f)};
+exportSalesCsv = function(){let csv='Date,Time,Table,Order,Drink,Qty,Price,Total,Payment,Note\n';data.sales.forEach(o=>(o.items||[]).forEach(it=>{const vals=[o.date,o.time,o.table||'',o.id,it.name,it.qty,it.price,it.qty*it.price,o.payment||'',o.note||''];csv+=vals.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')+'\n'}));download(`sales-${todayKey()}.csv`,csv,'text/csv')};
+
+window.closeModal=closeModal;
+window.addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+render();
+</script>
+</body></html>
